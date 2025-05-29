@@ -1,0 +1,23 @@
+snapshot: lts-23.24
+packages:
+- .
+
+extra-deps:
+- h-raylib-5.5.2.1
+- linear-1.23.1
+
+# Override default flag values for project packages and extra-deps
+# flags: {}
+
+# Extra package databases containing global packages
+# extra-package-dbs: []
+
+# Control whether we use the GHC we find on the path
+# system-ghc: true
+
+# Extra directories used by Stack for building
+# extra-include-dirs: [./src]
+# extra-lib-dirs: [./src]
+
+# Allow a newer minor version of GHC than the snapshot specifies
+# compiler-check: newer-minor

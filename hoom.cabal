@@ -1,0 +1,67 @@
+cabal-version: 3.8
+name:          hoom
+version:       0.1.0.0
+license:       GPL-3.0-or-later
+license-file:  LICENSE
+author:        sh-koh
+maintainer:    70974710+sh-koh@users.noreply.github.com
+category:      Game
+build-type:    Simple
+
+common warnings
+    ghc-options:
+        -Wall
+
+common options
+    build-depends:
+        base >=4.19.2.0
+    ghc-options:
+        -O3
+        -threaded
+    default-language:
+        GHC2021
+    default-extensions:
+        OverloadedStrings
+        NamedFieldPuns
+        RecordWildCards
+        OverloadedRecordDot
+        QuasiQuotes
+
+library
+    import:
+        warnings,
+        options
+    exposed-modules:
+        Hoom
+        Hoom.Core
+        Hoom.Player
+        Hoom.Networking
+    build-depends:
+        h-raylib,
+        linear
+    hs-source-dirs:
+        src
+
+executable hoom
+    import:
+        warnings,
+        options
+    hs-source-dirs:
+        exe
+    main-is:
+        Main.hs
+    build-depends:
+        hoom
+
+test-suite hoom-test
+    import:
+        warnings,
+        options
+    type:
+        exitcode-stdio-1.0
+    hs-source-dirs:
+        test
+    main-is:
+        Main.hs
+    build-depends:
+        hoom

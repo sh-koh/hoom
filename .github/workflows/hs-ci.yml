@@ -1,0 +1,62 @@
+name: Build & Test
+on: [ push, pull_request]
+jobs:
+  cabal:
+    name: with cabal
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup GHC
+        uses: haskell-actions/setup@v2
+        with:
+          ghc-version: '9.8.4'
+          cabal-version: latest
+
+      - name: Install OS-level dependencies
+        run: |
+          sudo apt update -y
+          sudo apt install -y xorg-dev libx11-dev
+
+      - name: Configuration
+        run: |
+          cabal configure --enable-tests --disable-documentation
+          cabal build --dry-run
+
+      - name: Install haskell dependencies
+        run: cabal build all --only-dependencies
+
+      - name: Build project
+        run: cabal build all
+
+      - name: Run tests
+        run: cabal test all
+
+      # TODO: i might fix it
+      # - name: Check cabal file
+      #   run: cabal check
+  stack:
+    name: with stack
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup GHC
+        uses: haskell-actions/setup@v2
+        with:
+          ghc-version: '9.8.4'
+          enable-stack: true
+          stack-version: latest
+
+      - name: Install OS-level dependencies
+        run: |
+          sudo apt update -y
+          sudo apt install -y xorg-dev libx11-dev
+
+      - name: Build project
+        run: stack build
+
+      - name: Run tests
+        run: stack test
